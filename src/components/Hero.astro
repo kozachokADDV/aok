@@ -1,0 +1,75 @@
+---
+import Logomark from '~/components/Logomark.astro';
+import { ui, type Lang } from '~/i18n/ui';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = ui[lang];
+const mailto = `mailto:${t.contacts.email}?subject=${t.join.mailSubject}&body=${t.join.mailBody}`;
+---
+<section class="relative pt-32 md:pt-40 pb-24 md:pb-32 overflow-hidden">
+  <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+    <div class="absolute -top-32 left-1/2 -translate-x-1/2 w-[120%] h-[60vh] opacity-40">
+      <div class="w-full h-full" style="background: radial-gradient(ellipse 60% 80% at 50% 0%, rgba(201,165,92,0.18), transparent 60%);"></div>
+    </div>
+    <svg class="absolute top-24 right-[-10%] w-[55vw] max-w-[700px] opacity-[0.06]" viewBox="0 0 200 220" fill="none" aria-hidden="true">
+      <path d="M100 10 L185 30 L185 110 C185 160 150 195 100 215 C50 195 15 160 15 110 L15 30 Z" stroke="#C9A55C" stroke-width="1.5" fill="none"/>
+    </svg>
+  </div>
+
+  <div class="container-x relative">
+    <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-end">
+      <div class="lg:col-span-7 xl:col-span-7">
+        <p class="eyebrow reveal" style="--reveal-delay: 0ms;">{t.hero.eyebrow}</p>
+
+        <h1 class="reveal mt-6 text-[clamp(2.4rem,6vw,5.25rem)] leading-[1.02]" style="--reveal-delay: 100ms;">
+          <span class="block text-bone-100">{t.hero.title}</span>
+          <span class="block italic text-gold-500 mt-1">{t.hero.titleAccent}</span>
+        </h1>
+
+        <p class="reveal mt-8 max-w-2xl text-base md:text-lg text-bone-300 leading-relaxed" style="--reveal-delay: 220ms;">
+          {t.hero.lead}
+        </p>
+
+        <ul class="reveal mt-8 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3 max-w-xl" style="--reveal-delay: 320ms;">
+          {t.hero.bullets.map((b) => (
+            <li class="flex items-start gap-3 text-sm text-bone-200">
+              <span class="mt-2 inline-block w-3 h-px bg-gold-500"></span>
+              <span>{b}</span>
+            </li>
+          ))}
+        </ul>
+
+        <div class="reveal mt-10 flex flex-wrap items-center gap-4" style="--reveal-delay: 440ms;">
+          <a href={mailto} class="btn" data-cta="hero-primary">{t.hero.primaryCta}</a>
+          <a href="#about" class="btn btn-ghost">{t.hero.secondaryCta}</a>
+        </div>
+      </div>
+
+      <aside class="lg:col-span-5 xl:col-span-5 lg:pl-10 reveal" style="--reveal-delay: 540ms;" aria-hidden="true">
+        <div class="relative aspect-[4/5] max-w-md ml-auto">
+          <div class="absolute inset-0 border border-ink-700"></div>
+          <div class="absolute inset-0 border-l-[3px] border-gold-500" style="left: -3px;"></div>
+          <div class="absolute -inset-px bg-gradient-to-b from-gold-500/[0.04] to-transparent"></div>
+
+          <div class="absolute inset-0 flex items-center justify-center">
+            <Logomark size={220} />
+          </div>
+
+          <div class="absolute top-6 left-6 right-6 flex justify-between text-[0.65rem] tracking-[0.22em] uppercase text-bone-400">
+            <span>{lang === 'uk' ? 'Київ' : 'Kyiv'}</span>
+            <span>{lang === 'uk' ? 'З 2024' : 'Since 2024'}</span>
+          </div>
+          <div class="absolute bottom-6 left-6 right-6 flex justify-between text-[0.65rem] tracking-[0.22em] uppercase text-bone-400">
+            <span>UA · {lang === 'uk' ? 'Безпека' : 'Security'}</span>
+            <span>№ 01</span>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <div class="mt-20 flex items-center gap-4">
+      <span class="text-[0.65rem] tracking-[0.3em] uppercase text-bone-400">{t.hero.scroll}</span>
+      <span class="block flex-1 max-w-[140px] h-px bg-gradient-to-r from-bone-400/40 to-transparent"></span>
+    </div>
+  </div>
+</section>

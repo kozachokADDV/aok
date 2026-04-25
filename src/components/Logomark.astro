@@ -1,0 +1,51 @@
+---
+interface Props {
+  size?: number;
+  withText?: boolean;
+  textLang?: 'uk' | 'en';
+  class?: string;
+}
+const { size = 44, withText = false, textLang = 'uk', class: cls = '' } = Astro.props;
+const textTop = textLang === 'uk' ? 'АОК' : 'SCAU';
+const textBottom = textLang === 'uk' ? 'Асоціація Охоронних Компаній' : 'Security Companies Association';
+---
+<div class={`flex items-center gap-3 ${cls}`}>
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 64 64"
+    fill="none"
+    aria-hidden="true"
+    class="shrink-0"
+  >
+    <defs>
+      <linearGradient id="lm-g" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#E5C794"/>
+        <stop offset="1" stop-color="#A98744"/>
+      </linearGradient>
+    </defs>
+    <path
+      d="M32 6 L54 12 L54 30 C54 43 45 52 32 58 C19 52 10 43 10 30 L10 12 Z"
+      fill="rgba(201, 165, 92, 0.06)"
+      stroke="url(#lm-g)"
+      stroke-width="1.8"
+      stroke-linejoin="round"
+    />
+    <g stroke="url(#lm-g)" stroke-width="2" stroke-linecap="round" fill="none">
+      <circle cx="32" cy="22" r="3.2" />
+      <circle cx="22" cy="26" r="2.6" />
+      <circle cx="42" cy="26" r="2.6" />
+      <circle cx="26" cy="32" r="2.4" />
+      <circle cx="38" cy="32" r="2.4" />
+      <path d="M22 44 C22 38 28 36 32 36 C36 36 42 38 42 44" />
+      <path d="M16 44 C16 40 19 38 22 38" opacity="0.8"/>
+      <path d="M48 44 C48 40 45 38 42 38" opacity="0.8"/>
+    </g>
+  </svg>
+  {withText && (
+    <div class="flex flex-col leading-tight">
+      <span class="font-display text-lg tracking-tight text-bone-100" style="letter-spacing: 0.08em;">{textTop}</span>
+      <span class="text-[0.625rem] uppercase tracking-[0.18em] text-bone-400">{textBottom}</span>
+    </div>
+  )}
+</div>

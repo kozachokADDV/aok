@@ -1,0 +1,53 @@
+---
+import { ui, type Lang } from '~/i18n/ui';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = ui[lang];
+const mailto = `mailto:${t.contacts.email}?subject=${t.join.mailSubject}&body=${t.join.mailBody}`;
+const phoneClean = t.contacts.phone.replace(/[^+\d]/g, '');
+---
+<section id="contacts" class="py-24 md:py-32 bg-ink-900/40 relative">
+  <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-ink-600 to-transparent"></div>
+  <div class="container-x">
+    <div class="grid lg:grid-cols-12 gap-12 lg:gap-16">
+      <div class="lg:col-span-5 reveal">
+        <p class="eyebrow">{t.contacts.eyebrow}</p>
+        <h2 class="mt-6 text-[clamp(2rem,4.5vw,3.75rem)] leading-[1.05]">
+          {t.contacts.headline}
+        </h2>
+      </div>
+
+      <dl class="lg:col-span-7 grid sm:grid-cols-2 gap-x-10 gap-y-10 reveal" style="--reveal-delay: 120ms;">
+        <div>
+          <dt class="text-[0.65rem] tracking-[0.28em] uppercase text-bone-400 mb-3">Email</dt>
+          <dd>
+            <a href={mailto} class="font-display text-2xl md:text-3xl text-bone-100 hover:text-gold-500 transition-colors duration-300 break-all">
+              {t.contacts.email}
+            </a>
+          </dd>
+        </div>
+
+        <div>
+          <dt class="text-[0.65rem] tracking-[0.28em] uppercase text-bone-400 mb-3">{lang === 'uk' ? 'Телефон' : 'Phone'}</dt>
+          <dd>
+            <a href={`tel:${phoneClean}`} class="font-display text-2xl md:text-3xl text-bone-100 hover:text-gold-500 transition-colors duration-300">
+              {t.contacts.phone}
+            </a>
+          </dd>
+        </div>
+
+        <div class="sm:col-span-2">
+          <dt class="text-[0.65rem] tracking-[0.28em] uppercase text-bone-400 mb-3">{lang === 'uk' ? 'Адреса' : 'Address'}</dt>
+          <dd class="text-bone-200">
+            <span class="block text-base">{t.contacts.address}</span>
+            <span class="block text-base">{t.contacts.addressLine}</span>
+          </dd>
+        </div>
+
+        <div class="sm:col-span-2 pt-4">
+          <a href={mailto} class="btn" data-cta="contacts">{t.contacts.cta}</a>
+        </div>
+      </dl>
+    </div>
+  </div>
+</section>

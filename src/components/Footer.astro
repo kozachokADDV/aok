@@ -1,0 +1,36 @@
+---
+import Logomark from '~/components/Logomark.astro';
+import { ui, type Lang } from '~/i18n/ui';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = ui[lang];
+const year = new Date().getFullYear();
+---
+<footer class="border-t border-ink-700 py-14">
+  <div class="container-x">
+    <div class="grid md:grid-cols-12 gap-10 items-start">
+      <div class="md:col-span-5">
+        <Logomark size={40} withText={true} textLang={lang} />
+        <p class="mt-6 text-sm text-bone-400 max-w-sm leading-relaxed">{t.footer.tagline}</p>
+      </div>
+
+      <div class="md:col-span-4">
+        <p class="text-[0.65rem] tracking-[0.28em] uppercase text-bone-400 mb-3">{lang === 'uk' ? 'Контакт' : 'Contact'}</p>
+        <a href={`mailto:${t.contacts.email}`} class="block font-display text-lg text-bone-100 hover:text-gold-500 transition">{t.contacts.email}</a>
+        <a href={`tel:${t.contacts.phone.replace(/[^+\d]/g,'')}`} class="block font-display text-lg text-bone-100 hover:text-gold-500 transition mt-1">{t.contacts.phone}</a>
+      </div>
+
+      <div class="md:col-span-3">
+        <p class="text-[0.65rem] tracking-[0.28em] uppercase text-bone-400 mb-3">{lang === 'uk' ? 'Локація' : 'Location'}</p>
+        <p class="text-sm text-bone-200 leading-relaxed">{t.contacts.address}<br/>{t.contacts.addressLine}</p>
+      </div>
+    </div>
+
+    <div class="rule-gold mt-12"></div>
+
+    <div class="mt-6 flex flex-wrap items-center justify-between gap-4 text-[0.7rem] tracking-[0.22em] uppercase text-bone-400">
+      <span>© {year} · {t.footer.builtWith} · {t.footer.rights}</span>
+      <span>{lang === 'uk' ? 'Київ · Україна' : 'Kyiv · Ukraine'}</span>
+    </div>
+  </div>
+</footer>

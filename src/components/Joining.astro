@@ -1,0 +1,53 @@
+---
+import { ui, type Lang } from '~/i18n/ui';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = ui[lang];
+const mailto = `mailto:${t.contacts.email}?subject=${t.join.mailSubject}&body=${t.join.mailBody}`;
+---
+<section id="join" class="py-24 md:py-32 relative overflow-hidden">
+  <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+    <div class="absolute bottom-[-20%] right-[-10%] w-[60vw] h-[60vw] max-w-[600px] max-h-[600px] opacity-[0.05]">
+      <svg viewBox="0 0 200 220" fill="none" class="w-full h-full">
+        <path d="M100 10 L185 30 L185 110 C185 160 150 195 100 215 C50 195 15 160 15 110 L15 30 Z" stroke="#C9A55C" stroke-width="1.5" fill="none"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="container-x relative">
+    <header class="max-w-3xl reveal">
+      <p class="eyebrow">{t.join.eyebrow}</p>
+      <h2 class="mt-6 text-[clamp(2rem,4.5vw,3.75rem)] leading-[1.05]">
+        {t.join.headline}
+      </h2>
+      <p class="mt-6 text-bone-300 leading-relaxed">{t.join.lead}</p>
+    </header>
+
+    <div class="mt-16 grid lg:grid-cols-2 gap-12 lg:gap-20">
+      <div class="reveal">
+        <h3 class="font-sans text-[0.7rem] tracking-[0.28em] uppercase text-gold-500 mb-6">{t.join.criteriaTitle}</h3>
+        <ol class="space-y-4">
+          {t.join.criteria.map((c, i) => (
+            <li class="grid grid-cols-[auto_1fr] gap-5 items-start pb-4 border-b border-ink-700 last:border-b-0">
+              <span class="display-num text-2xl">0{i + 1}</span>
+              <span class="text-base text-bone-200 leading-relaxed pt-1">{c}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      <div class="reveal" style="--reveal-delay: 140ms;">
+        <h3 class="font-sans text-[0.7rem] tracking-[0.28em] uppercase text-gold-500 mb-6">{t.join.benefitsTitle}</h3>
+        <ul class="space-y-4">
+          {t.join.benefits.map((b) => (
+            <li class="grid grid-cols-[auto_1fr] gap-5 items-start pb-4 border-b border-ink-700 last:border-b-0">
+              <span class="text-gold-500 text-xl mt-0.5 leading-none">›</span>
+              <span class="text-base text-bone-200 leading-relaxed">{b}</span>
+            </li>
+          ))}
+        </ul>
+        <a href={mailto} class="btn mt-10" data-cta="join">{t.join.cta}</a>
+      </div>
+    </div>
+  </div>
+</section>

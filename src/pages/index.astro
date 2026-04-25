@@ -1,0 +1,20 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import About from '~/components/About.astro';
+import Directions from '~/components/Directions.astro';
+import Members from '~/components/Members.astro';
+import Role from '~/components/Role.astro';
+import Joining from '~/components/Joining.astro';
+import Contacts from '~/components/Contacts.astro';
+const lang = 'uk' as const;
+---
+<BaseLayout lang={lang}>
+  <Hero lang={lang} />
+  <About lang={lang} />
+  <Directions lang={lang} />
+  <Members lang={lang} />
+  <Role lang={lang} />
+  <Joining lang={lang} />
+  <Contacts lang={lang} />
+</BaseLayout>

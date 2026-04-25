@@ -1,0 +1,35 @@
+---
+import { ui, type Lang } from '~/i18n/ui';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = ui[lang];
+---
+<section id="directions" class="py-24 md:py-32 bg-ink-900/40 relative">
+  <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-ink-600 to-transparent"></div>
+  <div class="container-x">
+    <header class="grid lg:grid-cols-12 gap-10 mb-16 reveal">
+      <div class="lg:col-span-5">
+        <p class="eyebrow">{t.directions.eyebrow}</p>
+        <h2 class="mt-6 text-[clamp(2rem,4.5vw,3.75rem)] leading-[1.05]">
+          {t.directions.headline}
+        </h2>
+      </div>
+      <p class="lg:col-span-6 lg:col-start-7 text-bone-300 leading-relaxed self-end">
+        {t.directions.lead}
+      </p>
+    </header>
+
+    <ol class="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-ink-700">
+      {t.directions.items.map((item, i) => (
+        <li class="card-pillar bg-ink-900/80 reveal" style={`--reveal-delay: ${i * 80}ms`}>
+          <div class="flex items-baseline justify-between mb-5">
+            <span class="display-num text-2xl">{item.number}</span>
+            <span class="text-[0.65rem] tracking-[0.22em] uppercase text-bone-400">{lang === 'uk' ? 'Напрям' : 'Focus'}</span>
+          </div>
+          <h3 class="text-xl md:text-2xl text-bone-100 leading-tight">{item.title}</h3>
+          <p class="mt-4 text-sm text-bone-300 leading-relaxed">{item.body}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
