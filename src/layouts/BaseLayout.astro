@@ -2,29 +2,25 @@
 import '~/styles/global.css';
 import Header from '~/components/Header.astro';
 import Footer from '~/components/Footer.astro';
-import { ui, type Lang, pathFor } from '~/i18n/ui';
+import { ui } from '~/i18n/ui';
 
-interface Props {
-  lang: Lang;
-}
-const { lang } = Astro.props;
-const t = ui[lang];
+const t = ui.uk;
+const tEn = ui.en;
 const base = import.meta.env.BASE_URL;
-const altLang: Lang = lang === 'uk' ? 'en' : 'uk';
-const altHref = pathFor(altLang, base);
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+
+// JSON values usable from inline client script (must be safe to embed)
+const titles = JSON.stringify({ uk: t.meta.title, en: tEn.meta.title });
+const descriptions = JSON.stringify({ uk: t.meta.description, en: tEn.meta.description });
 ---
 <!doctype html>
-<html lang={lang} dir="ltr">
+<html lang="uk" data-lang="uk" dir="ltr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
     <link rel="canonical" href={canonical} />
-    <link rel="alternate" hreflang={lang} href={canonical} />
-    <link rel="alternate" hreflang={altLang} href={new URL(altHref, Astro.site).toString()} />
-    <link rel="alternate" hreflang="x-default" href={new URL(pathFor('uk', base), Astro.site).toString()} />
 
     <title>{t.meta.title}</title>
     <meta name="description" content={t.meta.description} />
@@ -34,7 +30,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
     <meta property="og:description" content={t.meta.description} />
     <meta property="og:image" content={`${base}favicon.svg`} />
     <meta property="og:image:alt" content={t.meta.ogAlt} />
-    <meta property="og:locale" content={lang === 'uk' ? 'uk_UA' : 'en_US'} />
+    <meta property="og:locale" content="uk_UA" />
+    <meta property="og:locale:alternate" content="en_US" />
     <meta name="twitter:card" content="summary_large_image" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -47,51 +44,114 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
     <script type="application/ld+json" set:html={JSON.stringify({
       '@context': 'https://schema.org',
       '@type': 'Organization',
-      name: lang === 'uk' ? 'Асоціація Охоронних Компаній' : 'Security Companies Association of Ukraine',
-      alternateName: lang === 'uk' ? 'АОК' : 'SCAU',
+      name: 'Асоціація Охоронних Компаній',
+      alternateName: ['АОК', 'Security Companies Association of Ukraine', 'SCAU'],
       url: canonical,
       logo: `${base}favicon.svg`,
       email: 'pubAGC@ukr.net',
       telephone: '+380756290787',
       address: {
         '@type': 'PostalAddress',
-        streetAddress: lang === 'uk' ? 'вул. Шовковична, 5, оф. 2' : '5 Shovkovychna St., office 2',
-        addressLocality: lang === 'uk' ? 'Київ' : 'Kyiv',
+        streetAddress: 'вул. Шовковична, 5, оф. 2',
+        addressLocality: 'Київ',
         postalCode: '01021',
         addressCountry: 'UA',
       },
       areaServed: 'UA',
     })} />
+
+    <!-- pre-render lang init (no FOUC) -->
+    <script is:inline define:vars={{ titles, descriptions }}>
+      (function () {
+        try {
+          const saved = localStorage.getItem('aok-lang');
+          const lang = saved === 'en' ? 'en' : 'uk';
+          const html = document.documentElement;
+          html.setAttribute('data-lang', lang);
+          html.setAttribute('lang', lang);
+          if (lang !== 'uk') {
+            const t = JSON.parse(titles);
+            const d = JSON.parse(descriptions);
+            document.title = t[lang] || t.uk;
+            const meta = document.querySelector('meta[name="description"]');
+            if (meta) meta.setAttribute('content', d[lang] || d.uk);
+          }
+        } catch (e) { /* noop */ }
+      })();
+    </script>
   </head>
   <body>
     <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[200] focus:bg-gold-500 focus:text-ink-950 focus:px-4 focus:py-2">
-      {lang === 'uk' ? 'Перейти до контенту' : 'Skip to content'}
+      <span data-lang-content="uk">Перейти до контенту</span>
+      <span data-lang-content="en">Skip to content</span>
     </a>
-    <Header lang={lang} />
+
+    <div data-lang-content="uk">
+      <Header lang="uk" />
+    </div>
+    <div data-lang-content="en">
+      <Header lang="en" />
+    </div>
+
     <main id="main">
       <slot />
     </main>
-    <Footer lang={lang} />
 
-    <script>
+    <div data-lang-content="uk">
+      <Footer lang="uk" />
+    </div>
+    <div data-lang-content="en">
+      <Footer lang="en" />
+    </div>
+
+    <script is:inline define:vars={{ titles, descriptions }}>
       // intersection-observer reveal
-      const els = document.querySelectorAll<HTMLElement>('.reveal');
-      if ('IntersectionObserver' in window && els.length) {
-        const io = new IntersectionObserver(
-          (entries) => {
+      (function () {
+        const els = document.querySelectorAll('.reveal');
+        if ('IntersectionObserver' in window && els.length) {
+          const io = new IntersectionObserver(function (entries) {
             for (const e of entries) {
               if (e.isIntersecting) {
                 e.target.classList.add('is-visible');
                 io.unobserve(e.target);
               }
             }
-          },
-          { threshold: 0.12, rootMargin: '0px 0px -8% 0px' }
-        );
-        els.forEach((el) => io.observe(el));
-      } else {
-        els.forEach((el) => el.classList.add('is-visible'));
-      }
+          }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+          els.forEach(function (el) { io.observe(el); });
+        } else {
+          els.forEach(function (el) { el.classList.add('is-visible'); });
+        }
+      })();
+
+      // language toggle
+      (function () {
+        const t = JSON.parse(titles);
+        const d = JSON.parse(descriptions);
+        function setLang(lang) {
+          const html = document.documentElement;
+          html.setAttribute('data-lang', lang);
+          html.setAttribute('lang', lang);
+          try { localStorage.setItem('aok-lang', lang); } catch (e) {}
+          document.title = t[lang] || t.uk;
+          const meta = document.querySelector('meta[name="description"]');
+          if (meta) meta.setAttribute('content', d[lang] || d.uk);
+          document.querySelectorAll('[data-lang-set]').forEach(function (btn) {
+            const active = btn.getAttribute('data-lang-set') === lang;
+            btn.classList.toggle('is-active', active);
+            btn.setAttribute('aria-pressed', String(active));
+          });
+        }
+        // sync on load (in case storage was set)
+        const initial = document.documentElement.getAttribute('data-lang') || 'uk';
+        document.querySelectorAll('[data-lang-set]').forEach(function (btn) {
+          const active = btn.getAttribute('data-lang-set') === initial;
+          btn.classList.toggle('is-active', active);
+          btn.setAttribute('aria-pressed', String(active));
+          btn.addEventListener('click', function () {
+            setLang(btn.getAttribute('data-lang-set'));
+          });
+        });
+      })();
     </script>
   </body>
 </html>

@@ -1,25 +1,22 @@
 ---
-import { ui, type Lang, pathFor } from '~/i18n/ui';
+import { ui, type Lang } from '~/i18n/ui';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
-const base = import.meta.env.BASE_URL;
 const t = ui[lang];
-const ukHref = pathFor('uk', base);
-const enHref = pathFor('en', base);
 ---
 <div
-  class="inline-flex items-center text-[0.7rem] tracking-[0.16em] uppercase border border-ink-600 rounded-none overflow-hidden"
+  class="inline-flex items-center text-[0.7rem] tracking-[0.16em] uppercase border border-ink-600"
   role="group"
   aria-label={t.langSwitch.label}
 >
-  <a
-    href={ukHref}
-    aria-current={lang === 'uk' ? 'true' : undefined}
-    class={`px-3 py-1.5 transition-colors duration-200 ${lang === 'uk' ? 'bg-gold-500 text-ink-950' : 'text-bone-300 hover:text-gold-500'}`}
-  >{t.langSwitch.uk}</a>
-  <a
-    href={enHref}
-    aria-current={lang === 'en' ? 'true' : undefined}
-    class={`px-3 py-1.5 transition-colors duration-200 border-l border-ink-600 ${lang === 'en' ? 'bg-gold-500 text-ink-950' : 'text-bone-300 hover:text-gold-500'}`}
-  >{t.langSwitch.en}</a>
+  <button
+    type="button"
+    data-lang-set="uk"
+    class="lang-btn px-3 py-1.5 transition-colors duration-200 text-bone-300 hover:text-gold-500"
+  >{t.langSwitch.uk}</button>
+  <button
+    type="button"
+    data-lang-set="en"
+    class="lang-btn px-3 py-1.5 transition-colors duration-200 border-l border-ink-600 text-bone-300 hover:text-gold-500"
+  >{t.langSwitch.en}</button>
 </div>

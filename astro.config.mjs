@@ -10,11 +10,6 @@ export default defineConfig({
   site: SITE,
   base: BASE,
   trailingSlash: 'ignore',
-  i18n: {
-    defaultLocale: 'uk',
-    locales: ['uk', 'en'],
-    routing: { prefixDefaultLocale: false, redirectToDefaultLocale: false },
-  },
   integrations: [sitemap()],
   vite: {
     plugins: [tailwindcss()],

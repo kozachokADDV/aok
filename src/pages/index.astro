@@ -7,14 +7,18 @@ import Members from '~/components/Members.astro';
 import Role from '~/components/Role.astro';
 import Joining from '~/components/Joining.astro';
 import Contacts from '~/components/Contacts.astro';
-const lang = 'uk' as const;
+const langs = ['uk', 'en'] as const;
 ---
-<BaseLayout lang={lang}>
-  <Hero lang={lang} />
-  <About lang={lang} />
-  <Directions lang={lang} />
-  <Members lang={lang} />
-  <Role lang={lang} />
-  <Joining lang={lang} />
-  <Contacts lang={lang} />
+<BaseLayout>
+  {langs.map((lang) => (
+    <div data-lang-content={lang}>
+      <Hero lang={lang} />
+      <About lang={lang} />
+      <Directions lang={lang} />
+      <Members lang={lang} />
+      <Role lang={lang} />
+      <Joining lang={lang} />
+      <Contacts lang={lang} />
+    </div>
+  ))}
 </BaseLayout>

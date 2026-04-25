@@ -58,9 +58,14 @@ const mailto = `mailto:${t.contacts.email}?subject=${t.join.mailSubject}&body=${
 </header>
 
 <script>
-  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
-  const menu = document.querySelector<HTMLDivElement>('[data-mobile-menu]');
-  const links = document.querySelectorAll<HTMLAnchorElement>('[data-mobile-link]');
-  toggle?.addEventListener('click', () => menu?.classList.toggle('hidden'));
-  links.forEach((l) => l.addEventListener('click', () => menu?.classList.add('hidden')));
+  // pair every toggle button with its sibling mobile menu (works for both UA + EN headers)
+  document.querySelectorAll<HTMLElement>('header').forEach((header) => {
+    const toggle = header.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+    const menu = header.querySelector<HTMLDivElement>('[data-mobile-menu]');
+    if (!toggle || !menu) return;
+    toggle.addEventListener('click', () => menu.classList.toggle('hidden'));
+    menu.querySelectorAll<HTMLAnchorElement>('[data-mobile-link]').forEach((l) =>
+      l.addEventListener('click', () => menu.classList.add('hidden'))
+    );
+  });
 </script>
