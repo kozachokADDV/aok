@@ -7,7 +7,6 @@ export const defaultLang = 'uk' as const;
 export type Lang = keyof typeof languages;
 
 type Direction = { number: string; title: string; body: string };
-type Member = { name: string; meta: string };
 type Criterion = string;
 
 type Dict = {
@@ -52,8 +51,9 @@ type Dict = {
     eyebrow: string;
     headline: string;
     lead: string;
-    list: Member[];
-    note: string;
+    countLabel: string;
+    countSuffix: string;
+    confidentiality: string;
   };
   role: {
     eyebrow: string;
@@ -146,9 +146,9 @@ export const ui: Record<Lang, Dict> = {
     },
     directions: {
       eyebrow: '02 — Напрями діяльності',
-      headline: 'Пʼять напрямів роботи',
+      headline: 'Шість напрямів роботи',
       lead:
-        'АОК системно розвиває ринок безпеки України за пʼятьма ключовими векторами — від законодавства до підготовки кадрів.',
+        'АОК системно розвиває ринок безпеки України за шістьма ключовими векторами — від аналітики та законодавства до підготовки кадрів.',
       items: [
         {
           number: '01',
@@ -175,21 +175,22 @@ export const ui: Record<Lang, Dict> = {
           title: 'Освіта та професійний розвиток',
           body: 'Підвищення кваліфікації фахівців у сфері безпеки, розвиток професійних компетенцій та обмін досвідом між учасниками ринку.',
         },
+        {
+          number: '06',
+          title: 'Аналітика та моніторинг ринку',
+          body: 'Системний аналіз ринку охоронних послуг в Україні: моніторинг цін у публічних закупівлях, виявлення демпінгу та недобросовісної конкуренції, аналіз податкового навантаження в галузі, підготовка аналітичних звітів і рекомендацій.',
+        },
       ],
     },
     members: {
       eyebrow: '03 — Учасники',
       headline: 'Хто з нами',
       lead:
-        'АОК обʼєднує компанії, що працюють легально, дотримуються стандартів та несуть відповідальність перед клієнтами. Це бізнес, який формує нову якість безпеки в Україні.',
-      list: [
-        { name: 'Венбест', meta: 'Учасник асоціації' },
-        { name: 'Шериф', meta: 'Учасник асоціації' },
-        { name: 'Альфа-Щит', meta: 'Учасник асоціації' },
-        { name: 'Тайтан', meta: 'Учасник асоціації' },
-        { name: 'А1 Безпека', meta: 'Учасник асоціації' },
-      ],
-      note: 'Перелік учасників оновлюється. Список наведено орієнтовно.',
+        'АОК обʼєднує охоронні компанії, що працюють легально, дотримуються стандартів та несуть відповідальність перед клієнтами. Це бізнес, який формує нову якість безпеки в Україні.',
+      countLabel: 'Понад',
+      countSuffix: 'охоронних компаній уже приєднались до АОК',
+      confidentiality:
+        'Поіменний перелік учасників — внутрішня інформація асоціації. Конфіденційність членства гарантована.',
     },
     role: {
       eyebrow: '04 — Роль безпеки',
@@ -310,9 +311,9 @@ export const ui: Record<Lang, Dict> = {
     },
     directions: {
       eyebrow: '02 — Focus areas',
-      headline: 'Five lines of work',
+      headline: 'Six lines of work',
       lead:
-        'SCAU advances the Ukrainian security market across five strategic vectors — from legislation to workforce development.',
+        'SCAU advances the Ukrainian security market across six strategic vectors — from market analytics and legislation to workforce development.',
       items: [
         {
           number: '01',
@@ -339,21 +340,22 @@ export const ui: Record<Lang, Dict> = {
           title: 'Education & professional growth',
           body: 'Upskilling security professionals, developing competencies and exchanging expertise between members of the market.',
         },
+        {
+          number: '06',
+          title: 'Market analytics & monitoring',
+          body: 'Systematic analysis of the Ukrainian security services market: monitoring prices in public procurement, detecting dumping and unfair competition, reviewing the tax burden, producing analytical reports and policy recommendations.',
+        },
       ],
     },
     members: {
       eyebrow: '03 — Members',
       headline: 'Who is with us',
       lead:
-        'SCAU brings together companies that operate legally, follow industry standards and stand behind their clients. These are the businesses defining a new quality of security in Ukraine.',
-      list: [
-        { name: 'Venbest', meta: 'Association member' },
-        { name: 'Sheriff', meta: 'Association member' },
-        { name: 'Alpha-Shchyt', meta: 'Association member' },
-        { name: 'Titan', meta: 'Association member' },
-        { name: 'A1 Security', meta: 'Association member' },
-      ],
-      note: 'The member list is updated periodically. Names shown are illustrative.',
+        'SCAU brings together security companies that operate legally, follow industry standards and stand behind their clients. These are the businesses defining a new quality of security in Ukraine.',
+      countLabel: 'Over',
+      countSuffix: 'security companies have already joined SCAU',
+      confidentiality:
+        'The named member roster is internal to the association. Member confidentiality is safeguarded.',
     },
     role: {
       eyebrow: '04 — Why security',

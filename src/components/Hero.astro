@@ -1,10 +1,11 @@
 ---
-import Logomark from '~/components/Logomark.astro';
 import { ui, type Lang } from '~/i18n/ui';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const t = ui[lang];
 const mailto = `mailto:${t.contacts.email}?subject=${t.join.mailSubject}&body=${t.join.mailBody}`;
+const base = import.meta.env.BASE_URL;
+const logoSrc = `${base}aok-logo.png`;
 ---
 <section class="relative pt-32 md:pt-40 pb-24 md:pb-32 overflow-hidden">
   <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
@@ -45,25 +46,36 @@ const mailto = `mailto:${t.contacts.email}?subject=${t.join.mailSubject}&body=${
         </div>
       </div>
 
-      <aside class="lg:col-span-5 xl:col-span-5 lg:pl-10 reveal" style="--reveal-delay: 540ms;" aria-hidden="true">
-        <div class="relative aspect-[4/5] max-w-md ml-auto">
-          <div class="absolute inset-0 border border-ink-700"></div>
-          <div class="absolute inset-0 border-l-[3px] border-gold-500" style="left: -3px;"></div>
-          <div class="absolute -inset-px bg-gradient-to-b from-gold-500/[0.04] to-transparent"></div>
+      <aside class="lg:col-span-5 xl:col-span-5 lg:pl-10 reveal" style="--reveal-delay: 540ms;">
+        <figure class="relative aspect-[4/5] max-w-md ml-auto">
+          <!-- corner rules -->
+          <span class="absolute top-0 left-0 w-8 h-px bg-gold-500"></span>
+          <span class="absolute top-0 left-0 w-px h-8 bg-gold-500"></span>
+          <span class="absolute top-0 right-0 w-8 h-px bg-gold-500"></span>
+          <span class="absolute top-0 right-0 w-px h-8 bg-gold-500"></span>
+          <span class="absolute bottom-0 left-0 w-8 h-px bg-gold-500"></span>
+          <span class="absolute bottom-0 left-0 w-px h-8 bg-gold-500"></span>
+          <span class="absolute bottom-0 right-0 w-8 h-px bg-gold-500"></span>
+          <span class="absolute bottom-0 right-0 w-px h-8 bg-gold-500"></span>
 
-          <div class="absolute inset-0 flex items-center justify-center">
-            <Logomark size={220} />
+          <!-- paper plate with full lockup -->
+          <div class="absolute inset-3 bg-bone-100 flex items-center justify-center p-8 sm:p-10">
+            <img
+              src={logoSrc}
+              alt={lang === 'uk' ? 'Емблема Асоціації Охоронних Компаній' : 'Emblem of the Security Companies Association'}
+              width="679"
+              height="975"
+              class="w-full h-full object-contain"
+              loading="eager"
+              decoding="async"
+            />
           </div>
 
-          <div class="absolute top-6 left-6 right-6 flex justify-between text-[0.65rem] tracking-[0.22em] uppercase text-bone-400">
+          <figcaption class="absolute -bottom-7 left-0 right-0 flex justify-between text-[0.65rem] tracking-[0.22em] uppercase text-bone-400">
             <span>{lang === 'uk' ? 'Київ' : 'Kyiv'}</span>
-            <span>{lang === 'uk' ? 'З 2024' : 'Since 2024'}</span>
-          </div>
-          <div class="absolute bottom-6 left-6 right-6 flex justify-between text-[0.65rem] tracking-[0.22em] uppercase text-bone-400">
-            <span>UA · {lang === 'uk' ? 'Безпека' : 'Security'}</span>
-            <span>№ 01</span>
-          </div>
-        </div>
+            <span>EST · 2018</span>
+          </figcaption>
+        </figure>
       </aside>
     </div>
 

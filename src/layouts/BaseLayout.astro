@@ -20,6 +20,9 @@ const descriptions = JSON.stringify({ uk: t.meta.description, en: tEn.meta.descr
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
+    <link rel="icon" type="image/png" sizes="192x192" href={`${base}aok-favicon-192.png`} />
+    <link rel="icon" type="image/png" sizes="512x512" href={`${base}aok-favicon-512.png`} />
+    <link rel="apple-touch-icon" sizes="180x180" href={`${base}apple-touch-icon.png`} />
     <link rel="canonical" href={canonical} />
 
     <title>{t.meta.title}</title>
@@ -28,7 +31,9 @@ const descriptions = JSON.stringify({ uk: t.meta.description, en: tEn.meta.descr
     <meta property="og:type" content="website" />
     <meta property="og:title" content={t.meta.title} />
     <meta property="og:description" content={t.meta.description} />
-    <meta property="og:image" content={`${base}favicon.svg`} />
+    <meta property="og:image" content={`${base}aok-favicon-512.png`} />
+    <meta property="og:image:width" content="512" />
+    <meta property="og:image:height" content="512" />
     <meta property="og:image:alt" content={t.meta.ogAlt} />
     <meta property="og:locale" content="uk_UA" />
     <meta property="og:locale:alternate" content="en_US" />
@@ -47,7 +52,7 @@ const descriptions = JSON.stringify({ uk: t.meta.description, en: tEn.meta.descr
       name: 'Асоціація Охоронних Компаній',
       alternateName: ['АОК', 'Security Companies Association of Ukraine', 'SCAU'],
       url: canonical,
-      logo: `${base}favicon.svg`,
+      logo: `${base}aok-favicon-512.png`,
       email: 'pubAGC@ukr.net',
       telephone: '+380756290787',
       address: {
