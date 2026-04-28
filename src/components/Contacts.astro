@@ -44,6 +44,23 @@ const phoneClean = t.contacts.phone.replace(/[^+\d]/g, '');
           </dd>
         </div>
 
+        <div class="sm:col-span-2">
+          <dt class="text-[0.65rem] tracking-[0.28em] uppercase text-bone-400 mb-3">{lang === 'uk' ? 'Соцмережі' : 'Social'}</dt>
+          <dd>
+            <a
+              href={t.contacts.facebookUrl}
+              target="_blank"
+              rel="noopener noreferrer me"
+              class="inline-flex items-center gap-3 group text-bone-100 hover:text-gold-500 transition-colors duration-300"
+            >
+              <span class="inline-flex items-center justify-center w-10 h-10 border border-ink-600 group-hover:border-gold-500 transition-colors duration-300" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M14.5 8.5h2.2V5.3h-2.7c-2 0-3.5 1.4-3.5 3.4V11H8.3v3.2H10.5V21h3.3v-6.8h2.4l.4-3.2h-2.8V9.4c0-.5.3-.9 1-.9z"/></svg>
+              </span>
+              <span class="font-display text-lg leading-tight">{t.contacts.facebookHandle}</span>
+            </a>
+          </dd>
+        </div>
+
         <div class="sm:col-span-2 pt-4">
           <a href={mailto} class="btn" data-cta="contacts">{t.contacts.cta}</a>
         </div>

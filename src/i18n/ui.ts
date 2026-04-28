@@ -82,6 +82,8 @@ type Dict = {
     phone: string;
     address: string;
     addressLine: string;
+    facebookUrl: string;
+    facebookHandle: string;
     cta: string;
   };
   footer: {
@@ -249,6 +251,8 @@ export const ui: Record<Lang, Dict> = {
       phone: '+38 (075) 629 07 87',
       address: 'Україна, 01021',
       addressLine: 'м. Київ, вул. Шовковична, 5, оф. 2',
+      facebookUrl: 'https://www.facebook.com/share/14Zma7PddwV/?mibextid=wwXIfr',
+      facebookHandle: 'Facebook · Асоціація Охоронних Компаній',
       cta: 'Написати листа',
     },
     footer: {
@@ -414,6 +418,8 @@ export const ui: Record<Lang, Dict> = {
       phone: '+38 (075) 629 07 87',
       address: 'Ukraine, 01021',
       addressLine: '5 Shovkovychna St., office 2, Kyiv',
+      facebookUrl: 'https://www.facebook.com/share/14Zma7PddwV/?mibextid=wwXIfr',
+      facebookHandle: 'Facebook · Security Companies Association',
       cta: 'Send an email',
     },
     footer: {
